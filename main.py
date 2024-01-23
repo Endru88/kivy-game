@@ -6,8 +6,6 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from random import choice, shuffle
 
-kivy.require('2.1.0')  # replace with your current Kivy version
-
 class ColorMatchingApp(App):
     def build(self):
         self.colors = self.generate_colors()
@@ -26,7 +24,6 @@ class ColorMatchingApp(App):
             (1, 0, 1, 1),  # Magenta
             (0, 1, 1, 1),  # Cyan
             (0.5, 0, 0, 1),  # Maroon
-            (1, 0.5, 0, 1),  # Orange
             (1, 1, 0.5, 1),  # Light Yellow
             (0.5, 1, 0, 1),  # Lime Green
             (0, 0.5, 0, 1),  # Dark Green
@@ -70,14 +67,17 @@ class ColorMatchingApp(App):
         if not self.is_game_over:
             target_color = self.target_color
             selected_color = button.background_color
-
+            '''ověření zda jsou barvy shodné v toleranci, 
+            převede target_color a selected_color do jednoho listu,
+            abs ověřuje že je absolutní rozdíl mezi nimi menší než tolerance'''
             tolerance = 0.01
             match = all(abs(target - selected) < tolerance for target, selected in zip(target_color, selected_color))
 
+            diff = [abs(target - selected) for target, selected in zip(target_color, selected_color)]
             if match:
                 self.score += 1  # Inkrementace skóre
             else:
-                self.show_popup("Konec hry", "Špatná barva. Zkus znovu.")
+                self.show_popup("Konec hry", "Špatná barva.")
                 self.score = 0  # Reset skóre
 
             # Aktualizace zobrazení skóre
