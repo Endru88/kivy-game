@@ -60,7 +60,7 @@ class ColorMatchingApp(App):
 
         layout.add_widget(option_buttons_layout)
 
-        # Add an "End" button
+        #End button
         end_button = Button(text="End Game", on_press=self.end_game)
         layout.add_widget(end_button)
 
